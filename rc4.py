@@ -7,20 +7,20 @@ def key_scheduling_algorithm(key, state_vector_len):
         state_vector_len = 255
 
     # Array "S" is initialized to the identity permutation
-    S = range(state_vector_len + 1)
+    S = list(range(state_vector_len + 1))
 
     j = 0
     keylength = len(key)
 
     for i in range (state_vector_len + 1):
-        j = (j + S[i] + key[i % keylength]) % state_vector_len
+        j = (j + S[i] + key[i % keylength]) % (state_vector_len + 1)
         # swap values of S[i] and S[j]
         S[i], S[j] = S[j], S[i]
 
     return S
 
 def pseudo_random_generation_algorithm(S, data):
-    result = []
+    result = [0] * len(data)
 
     i = 0
     j = 0
@@ -37,19 +37,28 @@ def pseudo_random_generation_algorithm(S, data):
         k = S[(S[i] + S[j]) % s_length]
         
         # then bitwise exclusive ORed (XORed) with the next byte of the message to produce the next byte of either ciphertext or plaintext.
-        result[i] =  data[i] ^ k
+        result[iteration] =  ord(data[iteration]) ^ k
 
     return result
 
 def convert_char_to_int(value):
     return [ord(ch) for ch in value]
 
+def rc4_encrypt(key, len, open_text):
+    return pseudo_random_generation_algorithm(key_scheduling_algorithm(key, len), open_text)
+
+def rc4_dencrypt(key, len, open_text):
+    return rc4_encrypt(key, len, open_text)
+
 def main():
     key = 'Secret'
     key = convert_char_to_int(key)
     open_text = 'Attack at dawn'
-    len = 256
-    result = pseudo_random_generation_algorithm(key_scheduling_algorithm(key, len), open_text)
+    len = 255
+    result = rc4_encrypt(key, len, open_text)
+
+    for el in result:
+        print(hex(el), end = " ")
 
 if __name__ == "__main__":
     main()

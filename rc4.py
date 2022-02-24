@@ -1,19 +1,17 @@
 from lib2to3.pytree import convert
 from re import L
 
-def key_scheduling_algorithm(key, state_vector_len):
-
-    if state_vector_len > 255:
-        state_vector_len = 255
-
+def key_scheduling_algorithm(key):
     # Array "S" is initialized to the identity permutation
-    S = list(range(state_vector_len + 1))
-
+    S = list(range(256))
     j = 0
+    
     keylength = len(key)
+    if keylength > 256:
+        keylength = 256
 
-    for i in range (state_vector_len + 1):
-        j = (j + S[i] + key[i % keylength]) % (state_vector_len + 1)
+    for i in range (256):
+        j = (j + S[i] + key[i % keylength]) % 256
         # swap values of S[i] and S[j]
         S[i], S[j] = S[j], S[i]
 
@@ -44,19 +42,19 @@ def pseudo_random_generation_algorithm(S, data):
 def convert_char_to_int(value):
     return [ord(ch) for ch in value]
 
-def rc4_encrypt(key, len, open_text):
-    return pseudo_random_generation_algorithm(key_scheduling_algorithm(key, len), open_text)
+def rc4_encrypt(key, plaintext):
+    return pseudo_random_generation_algorithm(key_scheduling_algorithm(key), plaintext)
 
-def rc4_dencrypt(key, len, open_text):
-    return rc4_encrypt(key, len, open_text)
+def rc4_dencrypt(key, plaintext):
+    return rc4_encrypt(key, plaintext)
 
 def main():
-    key = 'Secret'
+    key = input("Key: ")
     key = convert_char_to_int(key)
-    open_text = 'Attack at dawn'
-    len = 255
-    result = rc4_encrypt(key, len, open_text)
+    plaintext = input("Plaintext: ")
+    result = rc4_encrypt(key, plaintext)
 
+    print("Ciphertext: ", end="")
     for el in result:
         print(hex(el), end = " ")
 

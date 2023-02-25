@@ -49,7 +49,7 @@ def rc4_encrypt(key, plaintext, n=0):
     return pseudo_random_generation_algorithm(key_scheduling_algorithm(key), plaintext, n)
 
 
-def rc4_dencrypt(key, plaintext, n=0):
+def rc4_decrypt(key, plaintext, n=0):
     return rc4_encrypt(key, plaintext, n)
 
 

@@ -56,18 +56,3 @@ def rc4_encrypt(key, plaintext, n=0):
 
 def rc4_decrypt(key, plaintext, n=0):
     return rc4_encrypt(key, plaintext, n)
-
-
-def main():
-    key = input("Key: ")
-    key = convert_char_to_int(key)
-    plaintext = input("Plaintext: ")
-    result = rc4_encrypt(key, plaintext)
-
-    print("Ciphertext: ", end="")
-    for el in result:
-        print(f"{el:X}", end="")
-
-
-if __name__ == "__main__":
-    main()

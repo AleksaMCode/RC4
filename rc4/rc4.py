@@ -46,7 +46,12 @@ def convert_char_to_int(value):
 
 
 def rc4_encrypt(key, plaintext, n=0):
-    return pseudo_random_generation_algorithm(key_scheduling_algorithm(key), plaintext, n)
+    if n == 0:
+        return pseudo_random_generation_algorithm(key_scheduling_algorithm(key), plaintext, n)
+    if n < 256 or n > 3_072:
+        raise Exception(f"n={n} must be in range [256,3,072].")
+    if n % 256:
+        raise Exception(f"n={n} must be a multiple of 256.")
 
 
 def rc4_decrypt(key, plaintext, n=0):

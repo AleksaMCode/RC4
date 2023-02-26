@@ -54,5 +54,5 @@ def rc4_encrypt(key, plaintext, n=0):
         raise Exception(f"n={n} must be a multiple of 256.")
 
 
-def rc4_decrypt(key, plaintext, n=0):
-    return rc4_encrypt(key, plaintext, n)
+def rc4_decrypt(key, ciphertext, n=0):
+    return rc4_encrypt(key, ciphertext, n)

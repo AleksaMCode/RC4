@@ -12,3 +12,10 @@ RC4 is comprised of two phases:
 
 ## RC4-drop[n]
 <p align="justify">Small modification to the well known RC4 algorithm that skips first n bytes of keystream, where <code>n=0</code> corresponds to regular RC4. The number of skipped bytes should be in range <code>n∈[256,3,072]</code> where <code>n≡0(mod 256)</code>.
+
+## Usage
+```python
+from rc4 import rc4
+
+ciphertext = rc4.encrypt(rc4.convert_char_to_int("key"), "plaintext")
+```

@@ -1,0 +1,25 @@
+import pytest
+
+from rc4 import rc4
+
+test_data = [
+    ("plaintext1", "key1", [0xb7, 0x13, 0xf7, 0x63, 0xdb, 0xfd, 0xa6, 0x7a, 0x04, 0x7a]),
+    ("plaintext2", "key2", [0x72, 0xc5, 0x5a, 0x22, 0x2c, 0x7a, 0x9b, 0x33, 0x79, 0x85]),
+    ("plaintext3", "key3", [0xcb, 0x6e, 0xfe, 0x96, 0xf1, 0x33, 0x24, 0xd1, 0x3e, 0xb9]),
+    ("plaintext4", "key4", [0xc1, 0x88, 0x6c, 0x2b, 0xc0, 0x08, 0xd5, 0xa1, 0x91, 0xe9]),
+    ("plaintext5", "key5", [0xb9, 0x65, 0xb9, 0x49, 0xf1, 0xac, 0x40, 0x78, 0xe3, 0xc9])
+]
+
+test_n_data = [7, 1, 261, 305, 769, 5095, 255, -1]
+
+
+@pytest.mark.parametrize("plaintext, key, expected_ciphertext", test_data)
+def test_rc4_encryption(plaintext, key, expected_ciphertext):
+    ciphertext = rc4.encrypt(rc4.convert_char_to_int(key), plaintext)
+    assert ciphertext == expected_ciphertext
+
+
+@pytest.mark.parametrize("n", test_n_data)
+def test_rc4_drop_wrong_n(n):
+    with pytest.raises(Exception):
+        rc4.encrypt(rc4.convert_char_to_int("key"), "plaintext", n)

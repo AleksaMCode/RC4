@@ -11,11 +11,11 @@ RC4 is comprised of two phases:
 <p align="justify">You can find detailed explanation about the algorithm online. Also, here is my favorite quote I read about RC4: "<i>You can fit the code for RC4 onto a cocktail napkin, with plenty of room left over for the cocktail.</i>".</p>
 
 ## RC4-drop[n]
-<p align="justify">Small modification to the well known RC4 algorithm that skips first n bytes of keystream, where $n=0$ corresponds to regular RC4. The number of skipped bytes should be in range $n \in [256,3,072]$ where $n &\equiv 0 \pmod{256}$.
+<p align="justify">Small modification to the well known RC4 algorithm that skips first n bytes of keystream, where $n=0$ corresponds to regular RC4. The number of skipped bytes should be in range $n \in [256,3,072]$ where $n \equiv 0 \pmod{256}$.
 
 ## Usage
 ```python
 from rc4 import rc4
 
-ciphertext = rc4.encrypt(rc4.convert_char_to_int("key"), "plaintext")
+ciphertext = rc4.encrypt("key", "plaintext")
 ```

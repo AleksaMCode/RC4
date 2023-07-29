@@ -45,7 +45,8 @@ def convert_char_to_int(value):
     return [ord(ch) for ch in value]
 
 
-def encrypt(key, plaintext, n=0):
+def encrypt(plaintext, key, n=0):
+    key = convert_char_to_int(key)
     if n == 0:
         return pseudo_random_generation_algorithm(key_scheduling_algorithm(key), plaintext, n)
     if n < 256 or n > 3_072:
@@ -54,5 +55,5 @@ def encrypt(key, plaintext, n=0):
         raise Exception(f"n={n} must be a multiple of 256.")
 
 
-def decrypt(key, ciphertext, n=0):
-    return encrypt(key, ciphertext, n)
+def decrypt(ciphertext, key, n=0):
+    return encrypt(ciphertext, key, n)
